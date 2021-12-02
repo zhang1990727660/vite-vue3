@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
+. "$(dirname "$0")/common.sh"
 
-npm run lint
+[ -n "$CI" ] && exit 0
+
+npx lint-staged --allow-empty $1
