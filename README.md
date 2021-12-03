@@ -1,7 +1,8 @@
 ## 一、项目生成
 
-1、生成脚手架
-执行如下命令，生成一个 vite-vue3 脚手架
+1. 脚手架项目
+
+使用脚手架，生成一个 vite-vue3 项目
 
 ```
 npm init vite@latest my-vite-vue3
@@ -19,11 +20,11 @@ npm i
 npm run dev
 ```
 
-3. 测试项目是否启动成功
+3. 测试一下
+
+在浏览器中成功打开，项目成功启动
 
 ![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3db3956717e24d7aa0fcb5fc05ac254c~tplv-k3u1fbpfcp-watermark.image?)
-
-项目成功启动
 
 ## 二、配置 ESLint + Prettier
 
@@ -212,6 +213,8 @@ npm i stylelint-config-recess-order -D // css顺序的配置，一份写好的�
 
 ### 2. 新建.stylelintrc.js 文件
 
+可以对 stylelint 的默认配置进行修改
+
 ```
 module.exports = {
   root: true,
@@ -241,15 +244,15 @@ public/*
 
 ## 四、配置 husky + lint-staged + commitlint
 
-### 1. husky
+### 1. 配置 husky
 
-husky 是一种 git hook 工具，使用 husky 可以挂载 git 钩子，当我们进行 commit、push 等操作前，进行 eslint、stylelint 检查，如果检查没通过，则不允许 commit 或 push 操作。以及在进行 commit msg 时，验证 msg 信息是否符合规范。
+husky 是一种 git hook 工具，使用 husky 可以挂载 git 钩子，当我们进行 commit、push 等操作前，可以进行 eslint、stylelint 检查，如果检查没通过，则不允许 commit 或 push 操作。以及在进行 commit msg 时，验证 msg 信息是否符合规范。
 
 husky 有如下缺陷：
 
 - husky 会将项目的所有文件都 lint 一遍，哪怕我们只是修改了部分文件，效率低下
-- husky 的钩子只能执行一个命令，有时候我们希望在 commit 之前执行多个指令，如 ESLint、Stylelint、Commitlint 等操作
-  因此 husky 一般都是配合 lint-staged 一起使用，很少会单独使用。
+- husky 的钩子只能执行一个命令，有时候我们希望在 commit 之前执行多个指令，如 ESLint、Stylelint、Commitlint 等操作。
+  因此，husky 一般都是配合 lint-staged 一起使用，很少会单独使用。
 
 **1）安装 husky**
 
@@ -300,7 +303,7 @@ npm run lint
 git commmit -m 'test'
 ```
 
-终端显示`ESLint`报错信息，并阻止 commit 操作，说明安装成功
+终端显示`ESLint`报错信息，并阻止 commit 操作，说明配置成功
 
 **5）添加 commit-msg 钩子**
 
@@ -322,10 +325,11 @@ npx --no-install commitlint --edit "$1"
 
 需要配合下文的 commitlint 一起使用，再进行测试
 
-### 2. lint-staged
+### 2. 配置 lint-staged
 
 **1）安装 lint-staged**
-lint-staged 只对暂存区也就是通过`git add`后的文件）的文件进行 lint（检查），同时它允许指定不同后缀文件执行不同指令的操作，并且可以按步骤再额外的执行一些其他的 shell 指令
+
+lint-staged 只对暂存区（通过`git add`后的）的文件进行 lint（检查），同时它允许指定不同后缀文件执行不同指令的操作，并且可以按步骤再额外的执行一些其他的 shell 指令
 
 ```
 npm i lint-staged --save-dev
@@ -364,7 +368,7 @@ npx lint-staged --allow-empty $1
 
 同上执行`git commmit -m 'test'`，终端显示`ESLint`报错信息，则配置成功
 
-### 3. commitlint
+### 3. 配置 commitlint
 
 主要是为了验证`commit msg`的 msg 是否符合规范
 
@@ -386,7 +390,7 @@ module.exports = {
 
 1. 去掉 mian.ts 文件中的`console.log`
 2. 执行`git commmit -m 'test'`，终端显示 msg 提交信息不规范，commit 操作中止，说明 comminlint 生效了
-3. 按 msg 规范再提交一次，执行`git commmit -m 'fix: 修复 main.ts 文件'`，committ 提交成功
+3. 按 msg 规范再提交一次，执行`git commmit -m 'fix: 修复 main.ts 文件'`，commit 提交成功
 
 ## 五、VSCode 中集成 ESLint + Prettier + Stylelint
 
@@ -401,7 +405,7 @@ module.exports = {
 - DotENV .env 文件高亮
 - EditorConfig for VS Code，这个插件可以让编译器读取配置文件，这个插件可以让编译器读取配置文件
 
-PS: 我们需要禁用掉 Vetur 插件，不然会导致 Volar 插件不生效
+**PS:** 我们需要禁用掉 Vetur 插件，不然会导致 Volar 插件不生效
 
 ### 2. 配置 setting.json
 
@@ -464,3 +468,7 @@ PS: 我们需要禁用掉 Vetur 插件，不然会导致 Volar 插件不生效
 - https://www.cnblogs.com/Yellow-ice/p/15127392.html
 - https://www.cnblogs.com/Yellow-ice/p/15349873.html
 - https://www.cnblogs.com/Yellow-ice/p/15349873.html
+- https://segmentfault.com/a/1190000040615432?utm_source=sf-similar-article
+- https://www.npmjs.com/package/husky
+- https://typicode.github.io/husky/#/
+- https://www.npmjs.com/package/lint-staged
