@@ -245,6 +245,12 @@ public/*
 
 husky 是一种 git hook 工具，使用 husky 可以挂载 git 钩子，当我们进行 commit、push 等操作前，进行 eslint、stylelint 检查，如果检查没通过，则不允许 commit 或 push 操作。以及在进行 commit msg 时，验证 msg 信息是否符合规范。
 
+husky 有如下缺陷：
+
+- husky 会将项目的所有文件都 lint 一遍，哪怕我们只是修改了部分文件，效率低下
+- husky 的钩子只能执行一个命令，有时候我们希望在 commit 之前执行多个指令，如 ESLint、Stylelint、Commitlint 等操作
+  因此 husky 一般都是配合 lint-staged 一起使用，很少会单独使用。
+
 **1）安装 husky**
 
 ```
@@ -286,6 +292,16 @@ npx husky add .husky/pre-commit "npm run lint"
 npm run lint
 ```
 
+**测试一下**
+
+在 main.ts 后加入`console.log`保存后，执行如下命令
+
+```
+git commmit -m 'test'
+```
+
+终端显示`ESLint`报错信息，并阻止 commit 操作，说明安装成功
+
 **5）添加 commit-msg 钩子**
 
 在`commit msg`时，对 msg 的内容进行规范验证，不符合规范，则不允许 commit 操作
@@ -304,11 +320,7 @@ npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
 npx --no-install commitlint --edit "$1"
 ```
 
-**PS:** husky 的缺陷
-
-- husky 会将项目的所有文件都 lint 一遍，哪怕我们只是修改了部分文件，效率低下
-- husky 的钩子只能执行一个命令，有时候我们希望在 commit 之前执行多个指令，如 ESLint、Stylelint、Commitlint 等操作
-  因此 husky 一般都是配合如下 lint-staged 一起使用，很少会单独使用它。
+需要配合下文的 commitlint 一起使用，再进行测试
 
 ### 2. lint-staged
 
@@ -339,6 +351,19 @@ npm i lint-staged --save-dev
   },
 ```
 
+修改 pre-commit 文件
+
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged --allow-empty $1
+```
+
+**测试一下**
+
+同上执行`git commmit -m 'test'`，终端显示`ESLint`报错信息，则配置成功
+
 ### 3. commitlint
 
 主要是为了验证`commit msg`的 msg 是否符合规范
@@ -356,6 +381,12 @@ module.exports = {
   extends: ['@commitlint/config-conventional'], // 直接引入配置好的一个库，免得自己要一个一个定义
 }
 ```
+
+**3）按如下步骤测试一下**
+
+1. 去掉 mian.ts 文件中的`console.log`
+2. 执行`git commmit -m 'test'`，终端显示 msg 提交信息不规范，commit 操作中止，说明 comminlint 生效了
+3. 按 msg 规范再提交一次，执行`git commmit -m 'fix: 修复 main.ts 文件'`，committ 提交成功
 
 ## 五、VSCode 中集成 ESLint + Prettier + Stylelint
 
