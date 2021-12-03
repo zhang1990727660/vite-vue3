@@ -239,7 +239,125 @@ public/*
 *.woff
 ```
 
-## 四、VSCode 中集成 ESLint + Prettier + Stylelint
+## 四、配置 husky + lint-staged + commitlint
+
+### 1. husky
+
+husky 是一种 git hook 工具，使用 husky 可以挂载 git 钩子，当我们进行 commit、push 等操作前，进行 eslint、stylelint 检查，如果检查没通过，则不允许 commit 或 push 操作。以及在进行 commit msg 时，验证 msg 信息是否符合规范。
+
+**1）安装 husky**
+
+```
+npm i husky -D
+```
+
+**2）在 package.json 中添加 prepare 脚本**
+
+```
+{
+  "script": {
+    "prepare": "husky install"
+  }
+}
+```
+
+**3）执行 prepare 脚本**
+
+```
+npm run prepare
+```
+
+会在项目的根目录下生成一个.husky 目录用于存放 git hooks
+
+**4）添加 pre-commit 钩子**
+
+在 commit 前进行 eslint、stylelint 等检查
+
+```
+npx husky add .husky/pre-commit "npm run lint"
+```
+
+执行如上命令，会在.husky 目录下新增一个 pre-commit 的 shell 脚本，该脚本的作用主要是为了执行`npm run lint`，脚本内容如下：
+
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run lint
+```
+
+**5）添加 commit-msg 钩子**
+
+在`commit msg`时，对 msg 的内容进行规范验证，不符合规范，则不允许 commit 操作
+
+```
+npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+```
+
+会在.husky 目录下生成 commit-msg 的 shell 脚本，脚本内容如下：
+
+```
+#!/bin/sh
+
+"$(dirname "$0")/_/husky.sh"
+
+npx --no-install commitlint --edit "$1"
+```
+
+**PS:** husky 的缺陷
+
+- husky 会将项目的所有文件都 lint 一遍，哪怕我们只是修改了部分文件，效率低下
+- husky 的钩子只能执行一个命令，有时候我们希望在 commit 之前执行多个指令，如 ESLint、Stylelint、Commitlint 等操作
+  因此 husky 一般都是配合如下 lint-staged 一起使用，很少会单独使用它。
+
+### 2. lint-staged
+
+**1）安装 lint-staged**
+lint-staged 只对暂存区也就是通过`git add`后的文件）的文件进行 lint（检查），同时它允许指定不同后缀文件执行不同指令的操作，并且可以按步骤再额外的执行一些其他的 shell 指令
+
+```
+npm i lint-staged --save-dev
+```
+
+**2）在 package.json 中添加相关配置**
+
+```
+"lint-staged": {
+    "*.vue": [
+      "eslint --fix",
+      "stylelint --fix"
+    ],
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{htm,html,css,sss,less,scss,sass}": "stylelint --fix"
+  },"lint-staged": {
+    "*.vue": [
+      "eslint --fix",
+      "stylelint --fix"
+    ],
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{htm,html,css,sss,less,scss,sass}": "stylelint --fix"
+  },
+```
+
+### 3. commitlint
+
+主要是为了验证`commit msg`的 msg 是否符合规范
+
+**1）安装 commitlint 相关依赖包**
+
+```
+npm install @commitlint/cli @commitlint/config-conventional --save-dev
+```
+
+**2）新建并配置 comminlint.config.js 文件**
+
+```
+module.exports = {
+  extends: ['@commitlint/config-conventional'], // 直接引入配置好的一个库，免得自己要一个一个定义
+}
+```
+
+## 五、VSCode 中集成 ESLint + Prettier + Stylelint
 
 ### 1. 安装如下插件：
 
@@ -296,7 +414,7 @@ PS: 我们需要禁用掉 Vetur 插件，不然会导致 Volar 插件不生效
  end_of_line = auto
 ```
 
-## 五、踩坑记
+## 六、踩坑记
 
 1. 执行`npm run lint` 时，控制台报 `Unknown word (CssSyntaxError)` 错误
    因为最新的 stylelint stylelint-config-standard 对 vue3 模版文件支持不是很好，不能正确识别出.vue 文件的 css 代码。所以需要对以下三个文件做降级处理
@@ -308,8 +426,10 @@ PS: 我们需要禁用掉 Vetur 插件，不然会导致 Volar 插件不生效
 2. VSCode 中 stylelint 格式化不生效的问题
    同样也是要对 stylelint 做降级处理，选择 0.87.6 版本安装即可，具体操作如下
 
-## 六、参考
+## 七、参考
 
 - https://blog.csdn.net/weixin_45137565/article/details/120403170
 - https://juejin.cn/post/7022720509875847182
 - https://www.cnblogs.com/Yellow-ice/p/15127392.html
+- https://www.cnblogs.com/Yellow-ice/p/15349873.html
+- https://www.cnblogs.com/Yellow-ice/p/15349873.html
