@@ -4,6 +4,9 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  globals: {
+    defineProps: true
+  },
   extends: [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
@@ -18,5 +21,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['vue', '@typescript-eslint'],
-  rules: {},
+  rules: {
+    "@typescript-eslint/no-explicit-any": "off", // close any
+  },
 }

@@ -18,16 +18,24 @@
     "*.{htm,html,css,sss,less,scss,sass}": "stylelint --fix"
   },
   "dependencies": {
-    "vue": "^3.2.16"
+    "ant-design-vue": "^3.0.0-alpha.14",
+    "axios": "^0.24.0",
+    "mockjs": "^1.1.0",
+    "normalize.css": "^8.0.1",
+    "vue": "^3.2.16",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
+    "@types/mockjs": "^1.0.4",
+    "@types/node": "^16.11.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "@vitejs/plugin-vue": "^1.9.3",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "autoprefixer": "^10.4.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.3",
@@ -36,15 +44,20 @@
     "eslint-plugin-promise": "^5.1.1",
     "eslint-plugin-vue": "^8.1.1",
     "husky": "^7.0.4",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
     "lint-staged": "^12.1.2",
+    "postcss": "^8.4.4",
     "prettier": "^2.5.0",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recess-order": "^3.0.0",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^5.0.0",
+    "tailwindcss": "^2.2.19",
     "typescript": "^4.4.3",
     "vite": "^2.6.4",
+    "vite-plugin-style-import": "^1.4.0",
     "vue-tsc": "^0.3.0"
   }
 }
