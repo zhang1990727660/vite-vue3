@@ -6,7 +6,12 @@ console.log(value)
 </script>
 
 <template>
-  <div class="home">Home page</div>
+  <div class="home">
+    <h1>Home page</h1>
+    <div class="item">
+      <a-button type="primary">Primary</a-button>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="less"></style>

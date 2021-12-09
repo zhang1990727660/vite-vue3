@@ -7,12 +7,17 @@ type Menu = {
   name: string
   url: string
   icon: string
+  children?: Menu[]
 }
 
 const defaultMenu: Menu[] = [
   { name: "首页", url: "/home", icon: "" },
   { name: "地图组件", url: "/map", icon: "" },
-  { name: "测试", url: "/test", icon: "" },
+  {
+    name: "文章管理",
+    url: "/article/lists",
+    icon: "",
+  },
 ]
 
 const router = useRouter()

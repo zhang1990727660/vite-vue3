@@ -2,9 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  .wh-100 {
-    width: 100%;
-    height: 100%;
-  }
+.wh-100 {
+  width: 100%;
+  height: 100%;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.mr-15 {
+  margin-right: 15px;
+}
+
+.mr-20 {
+  margin-right: 20px;
 }

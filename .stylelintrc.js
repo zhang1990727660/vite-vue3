@@ -3,7 +3,8 @@ module.exports = {
   plugins: ["stylelint-order"],
   extends: ["stylelint-config-standard", "stylelint-config-prettier", "stylelint-config-recess-order"],
   rules: {
-    'no-empty-source': null,
+    "block-no-empty": null,
+    "no-empty-source": null,
     "at-rule-no-unknown": [
       true,
       {

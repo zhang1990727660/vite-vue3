@@ -1,8 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 import Layout from "@/layout/index.vue"
-import Home from "@/views/Home.vue"
-import Test from "@/views/Test.vue"
-import Map from "@/views/Map.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,17 +11,35 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/home",
         name: "home",
-        component: Home,
-      },
-      {
-        path: "/test",
-        name: "test",
-        component: Test,
+        component: () => import("@/views/Home.vue"),
       },
       {
         path: "/map",
         name: "map",
-        component: Map,
+        component: () => import("@/views/Map.vue"),
+      },
+      {
+        path: "/article",
+        name: "article",
+        component: () => import("@/views/Article/index.vue"),
+        redirect: "/article/lists",
+        children: [
+          {
+            path: "lists",
+            name: "lists",
+            component: () => import("@/views/Article/children/lists/index.vue"),
+          },
+          {
+            path: "editor",
+            name: "editor",
+            component: () => import("@/views/Article/children/Editor.vue"),
+          },
+          {
+            path: "detail",
+            name: "detail",
+            component: () => import("@/views/Article/children/Detail.vue"),
+          },
+        ],
       },
     ],
   },

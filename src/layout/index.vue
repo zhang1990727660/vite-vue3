@@ -5,10 +5,14 @@ import Menu from "./components/Menu.vue"
 <template>
   <div class="wh-100 flex flex-row">
     <Menu />
-    <div class="flex-1">
+    <div class="content flex-1">
       <router-view></router-view>
     </div>
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.content {
+  overflow-y: auto;
+}
+</style>

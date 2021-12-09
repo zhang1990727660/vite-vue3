@@ -9,5 +9,7 @@ import "@/style/index.css"
 import "../mock"
 // 按需引入ant-design-vue
 import { userAntDesignVue } from "@/plugins/ant-desin-vue"
+// v-md-editor
+import { userMDEditor } from "@/plugins/v-md-editor"
 
-createApp(App).use(router).use(userAntDesignVue).mount("#app")
+createApp(App).use(router).use(userAntDesignVue).use(userMDEditor).mount("#app")

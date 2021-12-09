@@ -1,7 +1,7 @@
 import { App } from "vue"
-import { Button, Menu, Pagination } from "ant-design-vue"
+import { Input, Button, Menu, Pagination } from "ant-design-vue"
 
-const plugins = [Button, Menu, Pagination]
+const plugins = [Input, Button, Menu, Pagination]
 
 export function userAntDesignVue(app: App) {
   //   components.forEach((component: Component) => {
